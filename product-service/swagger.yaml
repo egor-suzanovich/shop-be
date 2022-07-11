@@ -1,0 +1,69 @@
+openapi: 3.0.0
+components:
+  schemas:
+    getProductsListResponse:
+      properties:
+        body:
+          type: array
+          items:
+            type: object
+            properties:
+              count:
+                type: number
+              description:
+                type: string
+              id:
+                type: string
+              price:
+                type: number
+              title:
+                type: string
+    getProductsByIdResponse:
+      properties:
+        count:
+          type: number
+        description:
+          type: string
+        id:
+          type: string
+        price:
+          type: number
+        title:
+          type: string
+      type: object
+  securitySchemes: {}
+info:
+  title: Product service
+  description: Product service API
+  version: '1'
+paths:
+  /products:
+    get:
+      operationId: getProductsList
+      description: Get products list
+      responses:
+        '200':
+          description: Status 200 Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getProductsListResponse'
+  '/products/{productId}':
+    get:
+      operationId: getProductsById
+      description: Get products by ID
+      parameters:
+        - name: "productId"
+          in: "path"
+          description: "ID of product to return"
+          required: true
+          content:
+            value:
+              example: "7567ec4b-b10c-48c5-9345-fc73c48a80aa"
+      responses:
+        '200':
+          description: Status 200 Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getProductsByIdResponse'

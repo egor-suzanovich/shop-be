@@ -1,0 +1,20 @@
+endpoints:
+  getProductsList:
+    description: 'Get products list'
+    methodResponses:
+      - statusCode: 200
+        responseModels:
+          application/json: 'getProductsListResponse'
+
+  getProductsById:
+    description: 'Get products by ID'
+    methodResponses:
+      - statusCode: 200
+        responseModels:
+          application/json: 'getProductsByIdResponse'
+    pathParams:
+      - name: productId
+        description: 'Product Id'
+        schema:
+          type: "string"
+

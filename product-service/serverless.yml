@@ -1,0 +1,40 @@
+service: product-service
+frameworkVersion: '3'
+
+plugins:
+  - serverless-webpack
+  - serverless-openapi-documentation
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+
+custom:
+  bundle:
+    linting: true
+  webpack:
+    webpackConfig: 'webpack.config.js'
+  documentation: ${file(./serverless/documentation/documentation.yml):documentation}
+
+functions:
+  getProductsList:
+    handler: src/functions/getProductsList/getProductsList.handler
+    role: LambdaDataRead
+    events:
+      - http:
+          path: products
+          method: get
+          documentation: ${file(serverless/documentation/documentation.yml):endpoints.products.getProductsList}
+
+  getProductsById:
+    handler: src/functions/getProductsById/getProductsById.handler
+    role: LambdaDataRead
+    events:
+      - http:
+          path: products/{productId}
+          method: get
+          documentation: ${file(serverless/documentation/documentation.yml):endpoints.products.getProductsById}
+
+resources: ${file(./serverless/resources.yml)}
+
+      

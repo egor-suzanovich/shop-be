@@ -1,0 +1,9 @@
+models:
+  - name: 'getProductsListResponse'
+    contentType: 'application/json'
+    schema: ${file(serverless/schema/getProductsList/response.json)}
+  
+  - name: 'getProductsByIdResponse'
+    contentType: 'application/json'
+    schema: ${file(serverless/schema/getProductsById/response.json)}
+  
