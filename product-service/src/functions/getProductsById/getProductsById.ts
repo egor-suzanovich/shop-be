@@ -10,18 +10,15 @@ import {
 } from '../../helpers/apiHelpers';
 import { getProductsList } from '../../helpers/products';
 import commonMidlware from '../../lib/commonMidlware';
-
-interface Product extends APIGatewayProxyEventPathParameters {
-  productId: string | undefined;
-}
+import { ProductPathParameter, ProductsListItem } from '../types';
 
 export const originalHandler = async (
   event: APIGatewayProxyEvent,
 ): Promise<APIGatewayProxyResult> => {
-  const { productId } = event.pathParameters as Product;
+  const { productId } = event.pathParameters as ProductPathParameter;
 
   try {
-    const productsList = await getProductsList();
+    const productsList = (await getProductsList()) as Array<ProductsListItem>;
     const product = productsList.find((p) => p.id === productId);
 
     if (!product) {
