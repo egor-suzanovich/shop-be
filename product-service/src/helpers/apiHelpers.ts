@@ -49,3 +49,11 @@ export function getProductNotFoundError(
   const body = buildErrorResponse(message);
   return getRawResponse(body, statusCode);
 }
+
+export function schemaValidationError(
+  message = 'Payload do not match schema',
+  statusCode: number = StatusCodes.BAD_REQUEST,
+): APIGatewayProxyResult {
+  const body = buildErrorResponse(message);
+  return getRawResponse(body, statusCode);
+}

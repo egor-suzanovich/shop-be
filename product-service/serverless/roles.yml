@@ -2,7 +2,7 @@ Resources:
     LambdaDataRead:
       Type: AWS::IAM::Role
       Properties:
-        RoleName: LambdaDataReadRole
+        RoleName: LambdaDataReadRole-${self:provider.region}
         AssumeRolePolicyDocument:
           Version: '2012-10-17'
           Statement:
