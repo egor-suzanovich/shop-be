@@ -1,0 +1,8 @@
+documentation:
+  version: '1'
+  title: 'Product service'
+  description: 'Product service API'
+  models: ${file(serverless/documentation/models.yml):models}
+
+endpoints:
+  products: ${file(serverless/documentation/products.yml):endpoints}
