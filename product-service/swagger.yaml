@@ -31,13 +31,75 @@ components:
         title:
           type: string
       type: object
+    createProductResponse:
+      properties:
+        id:
+          type: string
+        count:
+          type: number
+        description:
+          type: string
+        price:
+          type: number
+        title:
+          type: string
+      type: object
+    createProductPayload:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        count:
+          type: integer
+        price:
+          type: integer
+      required:
+        - title
+        - description
+        - count
+        - price
   securitySchemes: {}
 info:
   title: Product service
   description: Product service API
   version: '1'
+definitions:
+  Product:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+      description:
+        type: "string"
+      count:
+        type: "integer"
+        format: "int32"
+        default: 5
+      price:
+        type: "integer"
+        format: "int32"
+        default: 15
 paths:
   /products:
+    post:
+      operationId: createProduct
+      description: Create new product
+      parameters:
+        - in: "query"
+          name: "body"
+          description: "order placed for purchasing the pet"
+          required: true
+          schema:
+            $ref: "#/definitions/Product"
+      responses:
+        '200':
+          description: Status 200 Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createProductResponse'
     get:
       operationId: getProductsList
       description: Get products list
@@ -53,13 +115,14 @@ paths:
       operationId: getProductsById
       description: Get products by ID
       parameters:
-        - name: "productId"
-          in: "path"
-          description: "ID of product to return"
-          required: true
-          content:
-            value:
-              example: "7567ec4b-b10c-48c5-9345-fc73c48a80aa"
+      - name: "productId"
+        in: "path"
+        description: "productId"
+        required: true
+        content:
+          value:
+            example: "7567ec4b-b10c-48c5-9345-fc73c48a80aa"
+            
       responses:
         '200':
           description: Status 200 Response
@@ -67,3 +130,5 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/getProductsByIdResponse'
+
+

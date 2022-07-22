@@ -6,4 +6,11 @@ models:
   - name: 'getProductsByIdResponse'
     contentType: 'application/json'
     schema: ${file(serverless/schema/getProductsById/response.json)}
+
+  - name: 'createProductResponse'
+    contentType: 'application/json'
+    schema: ${file(serverless/schema/createProduct/response.json)}
+  - name: 'createProductPayload'
+    contentType: 'application/json'
+    schema: ${file(serverless/schema/createProduct/payload.json)}
   

@@ -18,3 +18,14 @@ endpoints:
         schema:
           type: "string"
 
+  createProduct:
+    description: 'Create new product'
+    requestBody:
+      description: 'Create product object'
+    requestModels:
+      application/json: 'createProductPayload'
+    methodResponses:
+      - statusCode: 200
+        responseModels:
+          application/json: 'createProductResponse'
+

@@ -5,7 +5,7 @@ createProduct:
       - http:
           path: products
           method: post
-          documentation: ${file(serverless/documentation/documentation.yml):endpoints.products.getProductsList}
+          documentation: ${file(serverless/documentation/documentation.yml):endpoints.products.createProduct}
 
 getProductsList:
   handler: src/functions/getProductsList/getProductsList.handler

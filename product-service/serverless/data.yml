@@ -1,0 +1,54 @@
+Resources:
+  AuctionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties: 
+      TableName: ${self:custom.params.dynamoTableName}
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions: 
+        - AttributeName: id
+          AttributeType: S
+        - AttributeName: title
+          AttributeType: S
+        - AttributeName: description
+          AttributeType: S
+        - AttributeName: count
+          AttributeType: N
+        - AttributeName: price
+          AttributeType: N
+      KeySchema: 
+        - AttributeName: id
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: title-id
+          KeySchema:
+            - AttributeName: title
+              KeyType: HASH
+            - AttributeName: id
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+        - IndexName: description-id
+          KeySchema:
+            - AttributeName: description
+              KeyType: HASH
+            - AttributeName: id
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+        - IndexName: count-id
+          KeySchema:
+            - AttributeName: count
+              KeyType: HASH
+            - AttributeName: id
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+        - IndexName: price-id
+          KeySchema:
+            - AttributeName: price
+              KeyType: HASH
+            - AttributeName: id
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+                  

@@ -1,0 +1,44 @@
+{
+  "definitions": {
+    "Product": {
+      "type": "object",
+      "required": ["title", "description", "count", "price"],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer"
+        },
+        "price": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "count": {
+        "type": "integer"
+      },
+      "price": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "title",
+      "description",
+      "count",
+      "price"
+    ]
+  }

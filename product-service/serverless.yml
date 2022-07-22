@@ -15,6 +15,7 @@ provider:
       PG_DBNAME: ${self:custom.params.pgDatabase}
       PG_USERNAME: ${self:custom.params.pgUser}
       PG_PASSWORD: ${self:custom.params.pgPassword}
+      DATA_TABLE_NAME: ${self:custom.params.dynamoTableName}
 
 custom:
   params:
@@ -23,6 +24,7 @@ custom:
     pgPassword: ${ssm:postgresdb-products-password}
     pgPort: ${ssm:postgresdb-products-port}
     pgUser: ${ssm:postgresdb-products-user}
+    dynamoTableName: ${ssm:dynamodb-name}
   bundle:
     linting: true
   webpack:
@@ -34,7 +36,7 @@ functions: ${file(./serverless/functions.yml)}
 resources: ${file(./serverless/resources.yml)}
 
 package:
-  individually: true
+  individually: false
   excludeDevDependencies: true
   patterns:
     - '!.git'
