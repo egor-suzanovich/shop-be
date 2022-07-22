@@ -1,11 +1,10 @@
-import { Client } from 'pg';
+import AWS from 'aws-sdk';
 import { v4 as uuid } from 'uuid';
 import {
   getApiErrorResponse,
   getApiResponse,
   schemaValidationError,
 } from '../../helpers/apiHelpers';
-import { productsDBConfig } from '../../helpers/products';
 import commonMidlware from '../../lib/commonMidlware';
 import { Product } from '../types';
 import { createProductSchema } from './validation';
@@ -25,35 +24,27 @@ export const originalHandler = async (event) => {
     return schemaValidationError(validationResult?.error?.details[0]?.message);
   }
 
-  const client = new Client(productsDBConfig);
-  await client.connect();
-
   try {
-    await client.query('BEGIN');
+    const TableName = process.env.DATA_TABLE_NAME as string;
+    const dynamodb = new AWS.DynamoDB.DocumentClient();
+    const payload = {
+      id: uuid(),
+      title,
+      description,
+      price,
+      count,
+    };
 
-    const product_id = uuid();
-    const { rows: product } = await client.query(
-      'INSERT INTO productsList (id, title, description, price) VALUES ($1, $2, $3, $4) RETURNING *',
-      [product_id, title, description, price],
-    );
-
-    const { rows: stock } = await client.query(
-      'INSERT INTO stocks (product_id, count) VALUES ($1, $2) RETURNING *',
-      [product_id, count],
-    );
-
-    await client.query('COMMIT');
-
-    console.log('[created products and stocks tables]', { product, stock });
-    return getApiResponse({ product, stock });
+    const config = {
+      TableName,
+      Item: payload,
+    };
+    const result = await dynamodb.put(config).promise();
+    console.log('[Product created]', payload);
+    return getApiResponse(payload);
   } catch (error) {
     console.log(error);
-
-    await client.query('ROLLBACK');
-
     return getApiErrorResponse();
-  } finally {
-    client.end();
   }
 };
 

@@ -27,4 +27,14 @@ Resources:
                   Resource:
                     - 'arn:aws:s3:::*'
                     - 'arn:aws:s3:::*/*'
+                - Effect: Allow
+                  Action:
+                    - dynamodb:Get
+                    - dynamodb:Query
+                    - dynamodb:Scan
+                    - dynamodb:Delete
+                    - dynamodb:Update
+                    - dynamodb:PutItem
+                  Resource: 
+                    - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.params.dynamoTableName}
 
