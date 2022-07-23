@@ -1,0 +1,26 @@
+createProduct:
+    handler: src/functions/createProduct/createProduct.handler
+    role: LambdaDataRead
+    events:
+      - http:
+          path: products
+          method: post
+          documentation: ${file(serverless/documentation/documentation.yml):endpoints.products.getProductsList}
+
+getProductsList:
+  handler: src/functions/getProductsList/getProductsList.handler
+  role: LambdaDataRead
+  events:
+    - http:
+        path: products
+        method: get
+        documentation: ${file(serverless/documentation/documentation.yml):endpoints.products.getProductsList}
+
+getProductsById:
+  handler: src/functions/getProductsById/getProductsById.handler
+  role: LambdaDataRead
+  events:
+    - http:
+        path: products/{productId}
+        method: get
+        documentation: ${file(serverless/documentation/documentation.yml):endpoints.products.getProductsById}
